@@ -18,10 +18,12 @@ fips_begin_lib(zlib)
         zlib.h
         zutil.c zutil.h
     )
-    add_definitions(-D_NO_FSEEKO)
-    add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
-    add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE)
+
+    add_definitions(-DZ_SOLO)
+
 fips_end_lib(zlib)
 if (FIPS_CLANG)
     set_target_properties(zlib PROPERTIES COMPILE_FLAGS "-Wno-shift-negative-value")
+elseif(FIPS_GCC)
+    set_target_properties(zlib PROPERTIES COMPILE_FLAGS "-Wno-implicit-fallthrough")
 endif()
